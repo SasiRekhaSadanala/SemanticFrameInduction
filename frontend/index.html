@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semantic Frame Induction Studio</title>
+    <!-- Fonts: Cabinet Grotesk for Headings, Inter for Body -->
+    <link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@800,500,700,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Animated complex mesh background -->
+    <div class="mesh-background">
+        <div class="blob color-1"></div>
+        <div class="blob color-2"></div>
+        <div class="blob color-3"></div>
+        <div class="blob color-4"></div>
+    </div>
+
+    <!-- Main App Container -->
+    <main class="app-container">
+        
+        <!-- Sidebar layout approach for a professional look -->
+        <aside class="sidebar glass-panel">
+            <div class="brand">
+                <div class="logo-box">
+                    <i class="ph-fill ph-target"></i>
+                </div>
+                <h1>Semantic Frame</h1>
+                <span class="badge">AI Studio</span>
+            </div>
+
+            <p class="sidebar-desc">Discover latent event schemas and dependency graphs through unsupervised contextual embeddings mapping.</p>
+
+            <form id="inductionForm" class="control-form">
+                <div class="input-group">
+                    <label for="sentence"><i class="ph ph-text-t"></i> Contextual Sequence</label>
+                    <textarea id="sentence" rows="3" placeholder="e.g. The investor bought major shares in the tech company." required></textarea>
+                </div>
+                
+                <div class="input-group">
+                    <label for="predicate"><i class="ph ph-crosshair"></i> Target Predicate</label>
+                    <input type="text" id="predicate" placeholder="e.g. buy" required autocomplete="off">
+                </div>
+
+                <div class="action-wrapper">
+                    <button type="submit" id="submitBtn" class="primary-btn">
+                        <span class="btn-text">Execute Induction</span>
+                        <i class="ph-bold ph-arrow-right btn-icon"></i>
+                        <span class="loader hidden" id="btnLoader"></span>
+                    </button>
+                    <!-- Glowing border effect for the button -->
+                    <div class="btn-glow"></div>
+                </div>
+            </form>
+
+            <div id="errorMessage" class="error-toast hidden">
+                <i class="ph-fill ph-warning-circle"></i>
+                <span id="errorText"></span>
+            </div>
+        </aside>
+
+        <!-- Right Side: Results & Analysis Canvas -->
+        <section class="canvas">
+            
+            <!-- Default Empty State -->
+            <div id="emptyState" class="empty-state visible">
+                <div class="empty-icon-wrapper">
+                    <i class="ph-light ph-planet"></i>
+                    <div class="radar-pulse"></div>
+                </div>
+                <h2>Awaiting Sequence</h2>
+                <p>Input a sentence and predicate to begin linguistic analysis and frame induction.</p>
+            </div>
+
+            <!-- Results Data (Hidden by default) -->
+            <div id="resultSection" class="results-layout hidden">
+                
+                <!-- Top Row: Frame & Synthesis -->
+                <div class="widgets-row">
+                    <!-- Predicted Frame Widget -->
+                    <div class="widget glass-panel featured-widget">
+                        <div class="widget-header">
+                            <i class="ph-fill ph-crown text-gold"></i>
+                            <h3>Induced Target Frame</h3>
+                        </div>
+                        <div class="frame-display">
+                            <h2 class="dynamic-gradient-text" id="predictedBadge">--</h2>
+                            <p>Highest consensus amongst k-NN embeddings</p>
+                        </div>
+                    </div>
+
+                    <!-- Predicate Insights widget -->
+                    <div class="widget glass-panel">
+                        <div class="widget-header">
+                            <i class="ph-fill ph-magnifying-glass text-blue"></i>
+                            <h3>Predicate Morphology</h3>
+                        </div>
+                        <div class="morph-stats">
+                            <div class="stat-box">
+                                <span class="stat-label">Token</span>
+                                <span class="stat-value" id="resPredicate">--</span>
+                            </div>
+                            <div class="stat-box">
+                                <span class="stat-label">Lemma</span>
+                                <span class="stat-value" id="resLemma">--</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Middle Row: Arguments -->
+                <div class="widget glass-panel full-width delay-1">
+                    <div class="widget-header">
+                        <i class="ph-fill ph-tree-structure text-green"></i>
+                        <h3>Syntactic Argument Graph</h3>
+                    </div>
+                    <div class="arguments-container" id="argumentsContainer">
+                        <div class="args-empty" id="argsEmpty">No arguments extracted matching the predicate.</div>
+                        <ul id="argumentsList" class="arguments-list"></ul>
+                    </div>
+                </div>
+
+                <!-- Bottom Row: Similarity Table -->
+                <div class="widget glass-panel full-width table-widget delay-2">
+                    <div class="widget-header compact">
+                        <i class="ph-fill ph-graph text-purple"></i>
+                        <div>
+                            <h3>Latent Embedding Proximity</h3>
+                            <p>Nearest semantic neighbors mapped from FrameNet</p>
+                        </div>
+                    </div>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Sim Score</th>
+                                    <th>Reference Sequence</th>
+                                    <th>Gold Frame</th>
+                                </tr>
+                            </thead>
+                            <tbody id="similarityTableBody">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
